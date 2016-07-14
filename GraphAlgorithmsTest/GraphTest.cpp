@@ -77,6 +77,7 @@ TEST_P(GraphTest, AddEdgeDirectedTest)
 	graph->AddEdge(0, 1, 1);
 
 	EXPECT_EQ(2, graph->NumberOfVertices());
+	/////
 }
 
 

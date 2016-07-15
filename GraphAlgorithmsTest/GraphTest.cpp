@@ -1,5 +1,5 @@
-#include "Graph.h"
 #include "GraphTest.h"
+#include "Graph.h"
 
 #include <gtest/gtest.h>
 #include <memory>
@@ -77,12 +77,8 @@ TEST_P(GraphTest, AddEdgeDirectedTest)
 	EXPECT_EQ(5, graph->NumberOfVertices());
 
 	graph->AddEdge(0, 1);
-	//(*graph)(0, 4) = 1;
-	//(*graph)(4, 0) = 1;
-
-	//EXPECT_EQ(1, (*graph)(0, 4));
-	//EXPECT_EQ(1, (*graph)(4, 0));
-	//EXPECT_EQ(1, (*graph)(0, 1));
+	EXPECT_TRUE(graph->IsVerticesConnected(0, 1));
+	EXPECT_FALSE(graph->IsVerticesConnected(1, 2));
 }
 
 
@@ -93,10 +89,8 @@ TEST_P(GraphTest, AddEdgeUndirectedTest)
 	EXPECT_EQ(5, graph->NumberOfVertices());
 
 	graph->AddEdge(0, 1);
-	//(*graph)(0, 4) = 1;
-
-	//EXPECT_EQ(1, (*graph)(0, 4));
-	//EXPECT_EQ(1, (*graph)(0, 1));
+	EXPECT_TRUE(graph->IsVerticesConnected(0, 1));
+	EXPECT_FALSE(graph->IsVerticesConnected(1, 2));
 }
 
 

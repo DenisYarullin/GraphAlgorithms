@@ -38,10 +38,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GraphRepresentationTest.h">
+    <ClInclude Include="GraphTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphTest.h">
+    <ClInclude Include="GraphRepresentationTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

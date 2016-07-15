@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="DepthFirstSearch.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphRepresentation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DepthFirstSearch.h.cpp" />

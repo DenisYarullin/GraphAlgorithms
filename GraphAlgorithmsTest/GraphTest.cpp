@@ -72,21 +72,33 @@ TEST_P(GraphTest, AddVertexUndirectedTest)
 
 TEST_P(GraphTest, AddEdgeDirectedTest)
 {
-	representation->Resize(2);
+	representation->Resize(5);
 	graph = std::make_unique<DirectedGraph<int>>(representation);
-	graph->AddEdge(0, 1, 1);
+	EXPECT_EQ(5, graph->NumberOfVertices());
 
-	EXPECT_EQ(2, graph->NumberOfVertices());
-	/////
+	graph->AddEdge(0, 1);
+	//(*graph)(0, 4) = 1;
+	//(*graph)(4, 0) = 1;
+
+	//EXPECT_EQ(1, (*graph)(0, 4));
+	//EXPECT_EQ(1, (*graph)(4, 0));
+	//EXPECT_EQ(1, (*graph)(0, 1));
 }
 
 
 TEST_P(GraphTest, AddEdgeUndirectedTest)
 {
-	representation->Resize(2);
+	representation->Resize(5);
 	graph = std::make_unique<UndirectedGraph<int>>(representation);
-	graph->AddEdge(0, 1, 1);
+	EXPECT_EQ(5, graph->NumberOfVertices());
+
+	graph->AddEdge(0, 1);
+	//(*graph)(0, 4) = 1;
+
+	//EXPECT_EQ(1, (*graph)(0, 4));
+	//EXPECT_EQ(1, (*graph)(0, 1));
 }
+
 
 
 

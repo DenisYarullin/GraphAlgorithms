@@ -4,38 +4,12 @@
 #define GRAPH_H_
 
 #include <vector>
+#include <algorithm>
 
 using std::vector;
 
 
 /*******************************************************************************/
-
-template <typename T>
-class GraphRepresentation;
-
-template <typename T>
-class ProxyGraphRepresentation
-{
-private:
-	GraphRepresentation<T>& representation_;
-	int begin_;
-	int end_;
-public:
-	ProxyGraphRepresentation(GraphRepresentation<T>& representation, int begin) : representation_(representation), begin_(begin) {}
-
-	ProxyGraphRepresentation& operator [](int end)
-	{
-		end_ = end;
-		return *this;
-	}
-
-	ProxyGraphRepresentation& operator=(T value)
-	{
-		representation_.matrix_[begin_][end_] = value;
-		return *this;
-	}
-};
-
 // Представление графа
 template <typename T>
 class GraphRepresentation
@@ -47,7 +21,6 @@ protected:
 	vector<vector<T> > matrix_;
 
 public:
-	friend class ProxyGraphRepresentation<T>;
 	GraphRepresentation() = default;
 	GraphRepresentation(int numberOfVertices) : numberOfVertices_(numberOfVertices) {}
 	virtual ~GraphRepresentation() = default;
@@ -55,17 +28,8 @@ public:
 	int Size() const;
 	virtual void Resize(int newSize) = 0;
 	void AddVertex();
-	virtual void AddEdge(int begin, int end, T value) = 0;
-
-	T& operator ()(int begin, int end)
-	{
-		return matrix_[begin][end];
-	}
-
-	ProxyGraphRepresentation<T> operator [](int begin)
-	{
-		return ProxyGraphRepresentation<T>(*this, begin);
-	}
+	virtual void AddEdge(int begin, int end) = 0;
+	virtual bool isVerticesConnected(int begin, int end) const = 0;
 
 protected:
 	void SetNumberOfVertices(int numberOfVertices);
@@ -119,14 +83,21 @@ public:
 		}
 	}
 
-	void AddEdge(int begin, int end, T value) override;
+	void AddEdge(int begin, int end) override;
+
+	bool isVerticesConnected(int begin, int end) const override
+	{
+		if (matrix_[begin][end] != T())
+			return true;
+		return false;
+	}
 };
 
 
 template <typename T>
-void AdjacencyMatrixRepresentation<T>::AddEdge(int begin, int end, T value)
+void AdjacencyMatrixRepresentation<T>::AddEdge(int begin, int end)
 {
-	matrix_[begin][end] = value;
+	matrix_[begin][end] = 1;
 }
 
 
@@ -152,16 +123,26 @@ public:
 		matrix_.resize(newSize);
 	}
 
-	void AddEdge(int begin, int end, T value) override;
+	void AddEdge(int begin, int end) override;
+
+	bool isVerticesConnected(int begin, int end) const override
+	{
+		if (std::find(matrix_[begin].begin(), matrix_[begin].end(), end) != matrix_[begin].end())
+			return true;
+		return false;
+	}
 };
 
 
 template <typename T>
-void AdjacencyListRepresentation<T>::AddEdge(int begin, int end, T value)
+void AdjacencyListRepresentation<T>::AddEdge(int begin, int end)
 {
-	int currentSize = matrix_[begin].size();
-	matrix_[begin].resize(currentSize + 1);
-	matrix_[begin][currentSize] = value;
+	if (std::find(matrix_[begin].begin(), matrix_[begin].end(), end) == matrix_[begin].end())
+	{
+		int currentSize = matrix_[begin].size();
+		matrix_[begin].resize(currentSize + 1);
+		matrix_[begin][currentSize] = end;
+	}
 }
 
 
@@ -180,12 +161,7 @@ public:
 	int NumberOfVertices() { return representation_->Size();  }
 
 	void AddVertex();
-	virtual void AddEdge(int beginVertex, int endVertex, T value) = 0;
-
-	GraphRepresentation<int>& operator ()(int begin, int end)
-	{
-		return *representation_(begin, end);
-	}
+	virtual void AddEdge(int beginVertex, int endVertex) = 0;
 };
 
 
@@ -210,14 +186,14 @@ public:
 
 	virtual ~DirectedGraph() = default;
 
-	void AddEdge(int beginVertex, int endVertex, T value) override;
+	void AddEdge(int beginVertex, int endVertex) override;
 };
 
 
 template <typename T>
-void DirectedGraph<T>::AddEdge(int beginVertex, int endVertex, T value)
+void DirectedGraph<T>::AddEdge(int beginVertex, int endVertex)
 {
-	representation_->AddEdge(beginVertex, endVertex, value);
+	representation_->AddEdge(beginVertex, endVertex);
 }
 
 
@@ -232,15 +208,15 @@ public:
 	UndirectedGraph(GraphRepresentation<T>* representation) : Graph(representation) {};
 	virtual ~UndirectedGraph() = default;
 
-	void AddEdge(int beginVertex, int endVertex, T value) override;
+	void AddEdge(int beginVertex, int endVertex) override;
 };
 
 
 template <typename T>
-void UndirectedGraph<T>::AddEdge(int beginVertex, int endVertex, T value)
+void UndirectedGraph<T>::AddEdge(int beginVertex, int endVertex)
 {
-	representation_->AddEdge(beginVertex, endVertex, value);
-	representation_->AddEdge(endVertex, beginVertex, value);
+	representation_->AddEdge(beginVertex, endVertex);
+	representation_->AddEdge(endVertex, beginVertex);
 }
 
 

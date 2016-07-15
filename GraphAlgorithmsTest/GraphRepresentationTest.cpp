@@ -30,15 +30,11 @@ TEST_F(GraphRepresentationTest, MatrixTest)
 	representation->Resize(20);
 	EXPECT_EQ(20, representation->Size());
 	representation->AddVertex();
-	EXPECT_EQ(21, representation->Size());
-
-	(*representation)(0, 10) = 100;
-	(*representation)[0][5] = 100;
-
-	AdjacencyMatrixRepresentation<int> representation1(20);
-	representation1(0, 10) = 1;
-	representation1[0][5] = 1;
-
+	//EXPECT_EQ(21, representation->Size());
+	//(*representation)(0, 10) = 10;
+	//EXPECT_EQ(10, (*representation)[0][10]);
+	//(*representation)[0][15] = 15;
+	//EXPECT_EQ(15, (*representation)(0, 15));
 }
 
 
@@ -50,5 +46,9 @@ TEST_F(GraphRepresentationTest, ListTest)
 	EXPECT_EQ(50, representation->Size());
 	representation->AddVertex();
 	EXPECT_EQ(51, representation->Size());
+	//(*representation)(0, 10) = 10;
+	//EXPECT_EQ(10, (*representation)[0][10]);
+	//(*representation)[0][15] = 15;
+	//EXPECT_EQ(15, (*representation)(0, 15));
 }
 

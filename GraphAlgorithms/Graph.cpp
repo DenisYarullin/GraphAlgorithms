@@ -7,9 +7,12 @@ int Graph::NumberOfVertices()
 }
 
 
-Graph::Graph(GraphRepresentation* representation) : representation_(representation)
+Graph::Graph(GraphRepresentation* representation)
+	: representation_(representation), connectedComponentsNumber_(0), timer_(1)
 {
 	visited_.resize(representation_->Size());
+	connectedComponents_.resize(representation_->Size());
+	times_.resize(representation_->Size());
 }
 
 
@@ -17,6 +20,8 @@ void Graph::AddVertex()
 {
 	representation_->AddVertex();
 	visited_.resize(representation_->Size() + 1);
+	connectedComponents_.resize(representation_->Size() + 1);
+	times_.resize(representation_->Size() + 1);
 }
 
 
@@ -56,12 +61,44 @@ ptrdiff_t Graph::NextVertex(vector<int>::iterator first, vector<int>::iterator l
 }
 
 
-void Graph::ResetVisitedVertices()
+void Graph::ResetGraph()
 {
-	for(auto& elem: visited_)
-	{
-		elem = false;
-	}
+	connectedComponentsNumber_ = 0;
+	timer_ = 1;
+
+	std::fill(visited_.begin(), visited_.end(), false);
+	std::fill(connectedComponents_.begin(), connectedComponents_.end(), 0);
+	std::fill(times_.begin(), times_.end(), std::make_pair(0, 0));
+}
+
+
+void Graph::AddConnectedComponent()
+{
+	++connectedComponentsNumber_;
+}
+
+
+void Graph::SetVertexConnectedComponentNumber(int vertex)
+{
+	connectedComponents_[vertex] = connectedComponentsNumber_;
+}
+
+
+void Graph::IncreaseTime()
+{
+	++timer_;
+}
+
+
+void Graph::SetVertexInTime(int vertex)
+{
+	times_[vertex].first = timer_;
+}
+
+
+void Graph::SetVertexOutTime(int vertex)
+{
+	times_[vertex].second = timer_;
 }
 
 

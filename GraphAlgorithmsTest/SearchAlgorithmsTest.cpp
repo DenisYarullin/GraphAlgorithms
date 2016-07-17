@@ -48,7 +48,7 @@ TEST_P(GraphTest, ExploreSecondUndirectedTest)
 		EXPECT_TRUE(graph->IsVertexVisited(i));
 	}
 
-	graph->ResetVisitedVertices();
+	graph->ResetGraph();
 
 	Explore(graph.get(), 2);
 	numbersVisitedVertices = {2, 3, 7, 6, 10, 11};
@@ -58,7 +58,7 @@ TEST_P(GraphTest, ExploreSecondUndirectedTest)
 		EXPECT_TRUE(graph->IsVertexVisited(i));
 	}
 
-	graph->ResetVisitedVertices();
+	graph->ResetGraph();
 
 	Explore(graph.get(), 5);
 	numbersVisitedVertices = {5};

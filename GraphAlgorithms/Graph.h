@@ -13,6 +13,10 @@ class Graph
 protected: 
 	GraphRepresentation* representation_;
 	vector<bool> visited_;
+	int connectedComponentsNumber_;
+	vector<int>	connectedComponents_;
+	int timer_;
+	vector<std::pair<int, int>> times_;
 public:
 	Graph() = default;
 	Graph(GraphRepresentation* representation);
@@ -29,7 +33,13 @@ public:
 	vector<int>::iterator End(int startVertex);
 	ptrdiff_t NextVertex(vector<int>::iterator first, vector<int>::iterator last);
 
-	void ResetVisitedVertices();
+	void AddConnectedComponent();
+	void SetVertexConnectedComponentNumber(int vertex);
+	void ResetGraph();
+
+	void IncreaseTime();
+	void SetVertexInTime(int vertex);
+	void SetVertexOutTime(int vertex);
 };
 
 

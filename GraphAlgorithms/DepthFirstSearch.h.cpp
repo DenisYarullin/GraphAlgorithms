@@ -2,13 +2,16 @@
 
 void Previsit(Graph* graph, int currentgVertex)
 {
-	//std::cout << currentgVertex << " ";
+	graph->SetVertexConnectedComponentNumber(currentgVertex);
+	graph->SetVertexInTime(currentgVertex);
+	graph->IncreaseTime();
 }
 
 
 void Postvisit(Graph* graph, int currentgVertex)
 {
-	//std::cout << currentgVertex << " ";
+	graph->SetVertexOutTime(currentgVertex);
+	graph->IncreaseTime();
 }
 
 
@@ -33,12 +36,13 @@ void Explore(Graph* graph, int startingVertex)
 
 void DepthFirstSearch(Graph* graph)
 {
-	graph->ResetVisitedVertices();
+	graph->ResetGraph();
 
 	for (int i = 0; i < graph->NumberOfVertices(); ++i)
 	{
 		if (!graph->IsVertexVisited(i))
 		{
+			graph->AddConnectedComponent();
 			Explore(graph, i);
 		}
 	}

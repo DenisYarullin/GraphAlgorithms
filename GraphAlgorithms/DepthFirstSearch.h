@@ -1,10 +1,9 @@
 #pragma once
 
 #include "Graph.h"
+#include <iostream>
 
-// нахождение всех вершин, достижимых из данной
-template <typename T>
-void Explore(Graph<T>* graph, int startingVertex)
-{
-	
-}
+void Previsit(Graph* graph, int currentgVertex);
+void Postvisit(Graph* graph, int currentgVertex);
+void Explore(Graph* graph, int startingVertex); // нахождение всех вершин, достижимых из данной
+void DepthFirstSearch(Graph* graph);

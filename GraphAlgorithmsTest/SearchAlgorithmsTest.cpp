@@ -70,7 +70,7 @@ TEST_P(GraphTest, ExploreSecondUndirectedTest)
 }
 
 
-TEST_P(GraphTest, DFSSwcondUndirectedTest)
+TEST_P(GraphTest, DFSSecondUndirectedTest)
 {
 	CreateSecondUndirectedGraph();
 
@@ -80,6 +80,28 @@ TEST_P(GraphTest, DFSSwcondUndirectedTest)
 	{
 		EXPECT_TRUE(graph->IsVertexVisited(i));
 	}
+}
+
+
+TEST_P(GraphTest, DFSFirstDirectedTest)
+{
+	CreateFirstDirectedGraph();
+
+	DepthFirstSearch(graph.get());
+
+	for (int i = 0; i < graph->NumberOfVertices(); i++)
+	{
+		EXPECT_TRUE(graph->IsVertexVisited(i));
+	}
+}
+
+
+TEST_P(GraphTest, AcyclicFirstDirectedTest)
+{
+	CreateFirstDirectedGraph();
+
+	DirectedGraph* directedGraph = static_cast<DirectedGraph*>(graph.get());
+	EXPECT_TRUE(directedGraph->IsAcyclic());
 }
 
 

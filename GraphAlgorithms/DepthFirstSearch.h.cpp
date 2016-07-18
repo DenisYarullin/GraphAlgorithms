@@ -1,4 +1,5 @@
 #include "DepthFirstSearch.h"
+#include "Graph.h"
 
 void Previsit(Graph* graph, int currentgVertex)
 {

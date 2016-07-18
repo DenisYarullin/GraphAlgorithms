@@ -64,6 +64,39 @@ public:
 		graph->AddEdge(8, 9);	// I < - > J
 	}
 
+	// 0 - A, 1 - B, 2 - C, 3 - D, 4 - E, 5 - F, 6 - G, 7 - H, 8 - I, 9 - J, 10 - K, 11 - L
+	void CreateFirstDirectedGraph()
+	{
+		representation->Resize(8);
+		graph = std::make_unique<DirectedGraph>(representation);
+		graph->AddEdge(0, 1);	// A - > B
+		graph->AddEdge(0, 2);	// A - > C
+		graph->AddEdge(0, 5);	// A - > F
+		graph->AddEdge(1, 4);	// B - > E
+		graph->AddEdge(2, 4);	// C - > D
+		graph->AddEdge(3, 0);	// D - > A
+		graph->AddEdge(3, 7);	// D - > H
+		graph->AddEdge(4, 5);	// E - > F
+		graph->AddEdge(4, 6);	// E - > G
+		graph->AddEdge(4, 7);	// E - > H
+		graph->AddEdge(5, 1);	// F - > B
+		graph->AddEdge(5, 6);	// F - > G
+		graph->AddEdge(7, 6);	// H - > G
+	}
+
+	void CreateSecondDirectedGraph()
+	{
+		representation->Resize(6);
+		graph = std::make_unique<DirectedGraph>(representation);
+		graph->AddEdge(0, 2);	// A - > C
+		graph->AddEdge(1, 3);	// B - > D
+		graph->AddEdge(1, 0);	// B - > A
+		graph->AddEdge(3, 2);	// D - > C
+		graph->AddEdge(2, 4);	// C - > E
+		graph->AddEdge(2, 5);	// C - > F
+	}
+
+
 
 	GraphRepresentation* representation;
 	std::unique_ptr<Graph> graph;

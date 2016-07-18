@@ -108,6 +108,36 @@ void DirectedGraph::AddEdge(int beginVertex, int endVertex)
 }
 
 
+bool DirectedGraph::IsAcyclic()
+{
+	DepthFirstSearch(this);
+
+	int numberVertices = NumberOfVertices();
+	
+	for (int i = 0; i < numberVertices; ++i)
+	{
+		for (vector<int>::iterator iter = Begin(i); iter != End(i); ++iter)
+		{
+			int nextVertex = NextVertex(Begin(i), iter);
+			if (nextVertex != -1)
+			{
+				if (times_[nextVertex].first < times_[i].first && times_[i].second < times_[nextVertex].second)
+					return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+void DirectedGraph::TopologicallySort() const
+{	
+	// B, A, D, C, E, F
+	// directed acyclic graphs or dags
+	// с помощью поиска в глубину, расположить вершины в порядке убывания их post-значений
+}
+
+
 void UndirectedGraph::AddEdge(int beginVertex, int endVertex)
 {
 	representation_->AddEdge(beginVertex, endVertex);

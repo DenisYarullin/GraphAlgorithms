@@ -4,6 +4,7 @@
 #define GRAPH_H_
 
 #include "GraphRepresentation.h"
+#include "DepthFirstSearch.h"
 
 
 /*******************************************************************************/
@@ -37,6 +38,8 @@ public:
 	void SetVertexConnectedComponentNumber(int vertex);
 	void ResetGraph();
 
+	//int ConncectedComponentsNumber();
+
 	void IncreaseTime();
 	void SetVertexInTime(int vertex);
 	void SetVertexOutTime(int vertex);
@@ -54,6 +57,8 @@ public:
 	DirectedGraph(GraphRepresentation* representation) : Graph(representation) {};
 	virtual ~DirectedGraph() = default;
 	void AddEdge(int beginVertex, int endVertex) override;
+	bool IsAcyclic();
+	void TopologicallySort() const;
 };
 
 

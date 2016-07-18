@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Graph.h"
 #include <iostream>
+
+class Graph;
 
 void Previsit(Graph* graph, int currentgVertex);
 void Postvisit(Graph* graph, int currentgVertex);
